@@ -7,15 +7,16 @@ from datetime import datetime
 GPIO.setmode(GPIO.BCM)
 RELAIS_1_GPIO = 27
 GPIO.setup(RELAIS_1_GPIO, GPIO.OUT)
+tijdAan = 7
+tijdUit = 23
 
-loop = "loop"
 LampToestand="False"
 
-while loop == "loop" :
+while True :
   DateNow = datetime.now()
   uur = DateNow.hour
 
-  if uur >= 8 and uur <= 24 :  # lamp aan om 08
+  if uur >= tijdAan and uur < tijdUit :  # lamp aan om tijdAan
       GPIO.output(RELAIS_1_GPIO, GPIO.HIGH) # aan
       if LampToestand != "Aan" :
        LampToestand = "Aan"
@@ -23,7 +24,7 @@ while loop == "loop" :
        f.write(datetime.now().ctime() + "  Lamp  " +  LampToestand +  "\n")
        f.close()
 
-  elif uur >= 1 and uur <= 7 : # lamp uit om 01
+  elif uur >= tijdUit or uur < tijdAan : # lamp uit om tijdUit
       GPIO.output(RELAIS_1_GPIO, GPIO.LOW) # uit
       if LampToestand != "Uit" :
         LampToestand = "Uit"
@@ -38,3 +39,4 @@ while loop == "loop" :
 
 
   time.sleep(1800)
+
