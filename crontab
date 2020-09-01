@@ -1,0 +1,3 @@
+@reboot sudo python /home/pi/src/lamp &
+@reboot sudo python /home/pi/src/pomp &
+0 0 1 * * sudo python /home/pi/src/SchrijfLogWeg &
