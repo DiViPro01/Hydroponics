@@ -7,36 +7,36 @@ from datetime import datetime
 GPIO.setmode(GPIO.BCM)
 RELAIS_1_GPIO = 27
 GPIO.setup(RELAIS_1_GPIO, GPIO.OUT)
-tijdAan = 7
-tijdUit = 23
+HourOn = 7
+HourOff = 23
 
-LampToestand="False"
+LampStatus="False"
 
 while True :
   DateNow = datetime.now()
-  uur = DateNow.hour
+  hour = DateNow.hour
 
-  if uur >= tijdAan and uur < tijdUit :  # lamp aan om tijdAan
+  if hour >= HourOn and hour < HourOff :  # lamp aan om tijdAan
       GPIO.output(RELAIS_1_GPIO, GPIO.HIGH) # aan
-      if LampToestand != "Aan" :
-       LampToestand = "Aan"
+      if LampStatus != "On" :
+       LampStatus = "On"
        f= open("/home/pi/logs/TriggerEvents.txt","a+")
-       f.write(datetime.now().ctime() + "  Lamp  " +  LampToestand +  "\n")
+       f.write(datetime.now().ctime() + "  Lamp  " +  LampStatus +  "\n")
        f.close()
 
-  elif uur >= tijdUit or uur < tijdAan : # lamp uit om tijdUit
+  elif hour >= HourOff or hour < HourOn : # lamp uit om tijdUit
       GPIO.output(RELAIS_1_GPIO, GPIO.LOW) # uit
-      if LampToestand != "Uit" :
-        LampToestand = "Uit"
+      if LampStatus != "Off" :
+        LampToestand = "Off"
         f= open("/home/pi/logs/TriggerEvents.txt","a+")
-        f.write(datetime.now().ctime() + "  Lamp  " + LampToestand +  "\n")
+        f.write(datetime.now().ctime() + "  Lamp  " + LampStatus +  "\n")
         f.close()
 
   else :
         f= open("/home/pi/logs/TriggerEvents.txt","a+")
-        f.write(datetime.now().ctime() + "  FOUT IN SCRIPT LAMP " +  "\n")
+        f.write(datetime.now().ctime() + "  Error in lamp script " +  "\n")
         f.close()
 
 
-  time.sleep(1800)
+  time.sleep(60)
 
