@@ -1,3 +1,9 @@
-@reboot sudo python /home/pi/src/lamp &
-@reboot sudo python /home/pi/src/pomp &
-0 0 1 * * sudo python /home/pi/src/SchrijfLogWeg &
+@reboot sudo python /home/pi/src/lamp.py &
+@reboot sudo python /home/pi/src/pomp.py &
+@reboot sudo rclone mount gdrive:timelapse $HOME/mnt/gdrive &
+@reboot sleep 10
+@reboot sudo /home/pi/src/drive.sh &
+#@reboot sudo motion start &
+0 0 1 * * sudo python /home/pi/src/SchrijfLogWeg.py &
+0 1 * * * sudo reboot &
+0 6 * * * sudo motion start &
